@@ -8,10 +8,15 @@ namespace SNake
         public Rectangle Piece;
         private int x, y;
         private const int width = 10, heigth = 10;
-        private static int ScoreChance;
+        private int ScoreChance;
         public static int Score;
         private Brush Color = Brushes.Green;
 
+        public Food(Random rand, int special)
+        {
+            Generate(rand, special);
+            Piece = new Rectangle(x, y, width, heigth);
+        }
         public Food(Random rand)
         {
             Generate(rand);
@@ -23,6 +28,23 @@ namespace SNake
             Piece.X = x;
             Piece.Y = y;
             graphics.FillRectangle(Color, Piece);
+        }
+        public void Generate(Random rand, int special)
+        {
+            x = rand.Next(0, 40) * 10;
+            y = rand.Next(0, 40) * 10;
+            switch (special)
+            {
+                case 1:
+                    Color = Brushes.Black;
+                    break;
+                case 2:
+                    Color = Brushes.Black;
+                    break;
+                case 3:
+                    Color = Brushes.Black;
+                    break;
+            }
         }
         public void Generate(Random rand)
         {
@@ -54,6 +76,5 @@ namespace SNake
             }
         }
         public static int GetScore() { return Score; }
-        public int GetChance() { return ScoreChance; }
     }
 }

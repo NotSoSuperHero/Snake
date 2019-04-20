@@ -12,6 +12,10 @@ namespace SNake
         private Random rand = new Random();
         private Snake snake;
         private Food food;
+        private Food Special;
+        private int Cooldown = 0;
+        private bool SpecialExists = false;
+        int Speed = 100;
         private int LoopDirection; //Kintamasis saugo gyvatės kryptį intervalo pradžioje.
 
 
@@ -23,7 +27,7 @@ namespace SNake
             snake.Grow();
             snake.Grow();
             food = new Food(rand);
-            gameLoop.Interval = 75;
+            gameLoop.Interval = Speed;
             gameLoop.Tick += Update;
         }
 
@@ -79,8 +83,7 @@ namespace SNake
 
         private void Update(object sender, EventArgs e)
         {
-            int a = food.GetChance();
-            this.Text = string.Format("Snake - Score: {0}    {1}", score, a);
+            this.Text = string.Format("Snake - Score: {0}", score);
             LoopDirection = direction; //Intervalo pradžioje nurodome to ciklo kryptį
             snake.Move(direction);
             for (int i = 1; i < snake.Body.Length; i++)
@@ -99,6 +102,24 @@ namespace SNake
                 score += Food.GetScore();
                 snake.Grow();
                 food.Generate(rand);
+                if (Cooldown == 0)
+                {
+                    if (!SpecialExists)
+                    {
+                        Special = new Food(rand, 2);
+                        SpecialExists = true;
+                    }
+                }
+                else
+                    Cooldown--;
+            }
+            if (Special != null)
+            if (snake.Body[0].IntersectsWith(Special.Piece))
+            {
+                Special = null;
+                SpecialExists = false;
+                Cooldown = 10;
+                score += 100;
             }
             this.Invalidate();
         }
@@ -106,6 +127,8 @@ namespace SNake
         private void Restart()
         {
             gameLoop.Stop();
+            Cooldown = 5;
+            SpecialExists = false;
             snake = new Snake();
             snake.Grow();
             snake.Grow();
@@ -119,6 +142,9 @@ namespace SNake
         { 
             snake.Draw(e.Graphics);
             food.Draw(e.Graphics);
+            if (SpecialExists)
+                Special.Draw(e.Graphics);
+
         }
     }
 }

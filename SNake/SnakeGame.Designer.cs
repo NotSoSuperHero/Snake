@@ -42,7 +42,7 @@
             this.MenuLabel.TabIndex = 0;
             this.MenuLabel.Text = "Snake\r\n\r\nUse the arrow keys to change directions. Use the space bar to pause. \r\n\r" +
     "\nPress ENTER to begin.";
-            this.MenuLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MenuLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // SnakeGame
             // 
