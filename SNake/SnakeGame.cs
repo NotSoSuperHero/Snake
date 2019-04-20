@@ -7,10 +7,9 @@ namespace SNake
     public partial class SnakeGame : Form
     {
         private int direction = 0;
-        private int score = 1;
+        private int score = 0;
         private Timer gameLoop = new Timer();
         private Random rand = new Random();
-        private Graphics graphics;
         private Snake snake;
         private Food food;
         private int LoopDirection; //Kintamasis saugo gyvatės kryptį intervalo pradžioje.
@@ -18,13 +17,12 @@ namespace SNake
 
         public SnakeGame()
         {
-
             InitializeComponent();
             snake = new Snake();
             snake.Grow();
             snake.Grow();
             snake.Grow();
-            food = new Food(rand, snake);
+            food = new Food(rand);
             gameLoop.Interval = 75;
             gameLoop.Tick += Update;
         }
@@ -50,14 +48,14 @@ namespace SNake
                 case Keys.A:
                     MenuLabel.Text = String.Format("Width is {0}, Heigth is {1}", ClientSize.Width, ClientSize.Height);
                     break;
-               
 
-            } 
-                if (gameLoop.Enabled)
+
+            }
+            if (gameLoop.Enabled)
             {
                 switch (e.KeyData)
                 {
-                    
+
                     //Vietoje tikrinimo su dabartine kryptimi, tikriname su intervalo kryptimi.
                     case Keys.Right:
                         if (LoopDirection != 2)
@@ -79,16 +77,10 @@ namespace SNake
             }
         }
 
-        private void SnakeGame_Paint(object sender, PaintEventArgs e)
-        {
-            graphics = this.CreateGraphics();
-            snake.Draw(graphics);
-            food.Draw(graphics);
-        }
-
         private void Update(object sender, EventArgs e)
         {
-            this.Text = string.Format("Sake - Score: {0}", score);
+            int a = food.GetChance();
+            this.Text = string.Format("Snake - Score: {0}    {1}", score, a);
             LoopDirection = direction; //Intervalo pradžioje nurodome to ciklo kryptį
             snake.Move(direction);
             for (int i = 1; i < snake.Body.Length; i++)
@@ -104,9 +96,9 @@ namespace SNake
                 snake.Body[0].Y = 1;
             if (snake.Body[0].IntersectsWith(food.Piece))
             {
-                score++;
+                score += Food.GetScore();
                 snake.Grow();
-                food.Generate(rand, snake);
+                food.Generate(rand);
             }
             this.Invalidate();
         }
@@ -114,14 +106,19 @@ namespace SNake
         private void Restart()
         {
             gameLoop.Stop();
-            graphics.Clear(SystemColors.Control);
             snake = new Snake();
             snake.Grow();
             snake.Grow();
             snake.Grow();
-            food = new Food(rand, snake);
+            food = new Food(rand);
             direction = 0; score = 1;
             MenuLabel.Visible = true;
+        }
+
+        private void SnakeGame_Paint(object sender, PaintEventArgs e)
+        { 
+            snake.Draw(e.Graphics);
+            food.Draw(e.Graphics);
         }
     }
 }

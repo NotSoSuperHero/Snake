@@ -33,8 +33,9 @@
             // 
             // MenuLabel
             // 
-            this.MenuLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MenuLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.MenuLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MenuLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MenuLabel.Location = new System.Drawing.Point(0, 0);
             this.MenuLabel.Name = "MenuLabel";
             this.MenuLabel.Size = new System.Drawing.Size(398, 392);
@@ -47,16 +48,16 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(398, 392);
+            this.ClientSize = new System.Drawing.Size(402, 392);
             this.Controls.Add(this.MenuLabel);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(416, 439);
+            this.MaximumSize = new System.Drawing.Size(420, 439);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(416, 439);
+            this.MinimumSize = new System.Drawing.Size(420, 439);
             this.Name = "SnakeGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Snake - Score: 1";
+            this.Text = "Snake - Score: 0";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.SnakeGame_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SnakeGame_KeyDown);
             this.ResumeLayout(false);

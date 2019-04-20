@@ -32,8 +32,7 @@ namespace SNake
         }
         public void Draw(Graphics graphics)
         {
-            graphics.FillRectangles(Brushes.Green, Body);
-            graphics.FillRectangle(Brushes.Blue, Body[0]);
+            graphics.FillRectangles(Brushes.Black, Body);
         }
 
         public void Move(int direction) // 0 = Right, 1 = Down;, 2 = Left, 3 = Up
