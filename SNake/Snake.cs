@@ -30,9 +30,10 @@ namespace SNake
         {
             return Body.ToList();
         }
-        public void Draw(Graphics graphics)
+        public void Draw(Graphics graphics, Brush HeadColor)
         {
             graphics.FillRectangles(Brushes.Black, Body);
+            graphics.FillRectangle(HeadColor, Body[0]);
         }
 
         public void Move(int direction) // 0 = Right, 1 = Down;, 2 = Left, 3 = Up
@@ -61,5 +62,5 @@ namespace SNake
             temp.Add(new Rectangle(Body[Body.Length - 1].X, Body[Body.Length - 1].Y, width, heigth));
             Body = temp.ToArray();
         }
-    }
+    }   
 }

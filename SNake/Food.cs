@@ -29,6 +29,12 @@ namespace SNake
             Piece.Y = y;
             graphics.FillRectangle(Color, Piece);
         }
+        public void Draw(Graphics graphics, Brush color)
+        {
+            Piece.X = x;
+            Piece.Y = y;
+            graphics.FillRectangle(color, Piece);
+        }
         public void Generate(Random rand, int special)
         {
             x = rand.Next(0, 40) * 10;
@@ -52,6 +58,7 @@ namespace SNake
             y = rand.Next(0, 40) * 10;
             ScoreChance = GenerateScoreChance(rand);
             Score = GenerateScore(ScoreChance);
+
         }
         public int GenerateScoreChance (Random rand)
         {

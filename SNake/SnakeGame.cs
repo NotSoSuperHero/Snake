@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using System.Collections.Generic;
 
 namespace SNake
 {
@@ -13,10 +15,14 @@ namespace SNake
         private Snake snake;
         private Food food;
         private Food Special;
-        private int Cooldown = 0;
+        private int Cooldown = 5;
         private bool SpecialExists = false;
-        int Speed = 100;
+        int Speed = 60;
         private int LoopDirection; //Kintamasis saugo gyvatės kryptį intervalo pradžioje.
+        private Brush SnakeHeadColor = Brushes.Black;
+        private Brush SpecFoodColor = Brushes.Coral;
+        private Color BackgroundColor;
+        private string PlayerName = "";
 
 
         public SnakeGame()
@@ -29,6 +35,7 @@ namespace SNake
             food = new Food(rand);
             gameLoop.Interval = Speed;
             gameLoop.Tick += Update;
+            FillLeaderboard();
         }
 
         private void SnakeGame_KeyDown(object sender, KeyEventArgs e)
@@ -36,21 +43,9 @@ namespace SNake
 
             switch (e.KeyData)
             {
-                case Keys.Enter:
-                    if (MenuLabel.Visible)
-                    {
-                        MenuLabel.Visible = false;
-                        gameLoop.Start();
-                    }
-                    break;
                 case Keys.Space:
                     if (!MenuLabel.Visible)
                         gameLoop.Enabled = (gameLoop.Enabled) ? false : true;
-                    break;
-                /**Lango dydžio testavimas
-                      **/
-                case Keys.A:
-                    MenuLabel.Text = String.Format("Width is {0}, Heigth is {1}", ClientSize.Width, ClientSize.Height);
                     break;
 
 
@@ -102,6 +97,7 @@ namespace SNake
                 score += Food.GetScore();
                 snake.Grow();
                 food.Generate(rand);
+
                 if (Cooldown == 0)
                 {
                     if (!SpecialExists)
@@ -114,18 +110,19 @@ namespace SNake
                     Cooldown--;
             }
             if (Special != null)
-            if (snake.Body[0].IntersectsWith(Special.Piece))
-            {
-                Special = null;
-                SpecialExists = false;
-                Cooldown = 10;
-                score += 100;
-            }
+                if (snake.Body[0].IntersectsWith(Special.Piece))
+                {
+                    Special = null;
+                    SpecialExists = false;
+                    Cooldown = 10;
+                    score += 100;
+                }
             this.Invalidate();
         }
 
         private void Restart()
         {
+            Mode(true);
             gameLoop.Stop();
             Cooldown = 5;
             SpecialExists = false;
@@ -134,18 +131,165 @@ namespace SNake
             snake.Grow();
             snake.Grow();
             food = new Food(rand);
-            direction = 0; score = 1;
-            MenuLabel.Visible = true;
+            WriteLeaderboard();
+            FillLeaderboard();
+            direction = 0; score = 0;
+            this.BackColor = SystemColors.Control;
+            Namebox.Text = PlayerName;
+           
         }
 
         private void SnakeGame_Paint(object sender, PaintEventArgs e)
-        { 
-            snake.Draw(e.Graphics);
+        {
+            snake.Draw(e.Graphics, SnakeHeadColor);
             food.Draw(e.Graphics);
             if (SpecialExists)
-                Special.Draw(e.Graphics);
+                Special.Draw(e.Graphics, SpecFoodColor);
+        }
 
+
+        private void Start_Click(object sender, EventArgs e)
+        {
+            PlayerName = Namebox.Text;
+            if (Namebox.Text == null)
+            {
+                PlayerName = "";
+            }
+            Mode(false);
+            gameLoop.Interval = Speed;
+            if (BackgroundColor == null)
+                this.BackColor = SystemColors.Control;
+            else this.BackColor = BackgroundColor;
+            gameLoop.Start();
+        }
+
+        private void HeadBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (HeadBox.Text)
+            {
+                case "Black":
+                    SnakeHeadColor = Brushes.Black;
+                    break;
+                case "Yellow":
+                    SnakeHeadColor = Brushes.Yellow;
+                    break;
+                case "Red":
+                    SnakeHeadColor = Brushes.Red;
+                    break;
+            }
+        }
+        private void Mode(bool mode)
+        {
+            MenuLabel.Visible = mode;
+            HeadBox.Enabled = mode;
+            HeadBox.Visible = mode;
+            Label1.Visible = mode;
+            Start.Enabled = mode;
+            Start.Visible = mode;
+            Label2.Visible = mode;
+            Namebox.Visible = mode;
+            Namebox.Enabled = mode;
+            Label3.Visible = mode;
+            SpecFoodBox.Enabled = mode;
+            SpecFoodBox.Visible = mode;
+            Label4.Visible = mode;
+            BackgroundBox.Enabled = mode;
+            BackgroundBox.Visible = mode;
+            Label5.Visible = mode;
+            SpeedBox.Enabled = mode;
+            SpeedBox.Visible = mode;
+            Leaderboard.Enabled = mode;
+            Leaderboard.Visible = mode;
+        }
+
+        private void SpecFoodBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (SpecFoodBox.Text)
+            {
+                case "Bronze":
+                    SpecFoodColor = Brushes.Coral;
+                    break;
+                case "Silver":
+                    SpecFoodColor = Brushes.Silver;
+                    break;
+                case "Gold":
+                    SpecFoodColor = Brushes.Gold;
+                    break;
+            }
+        }
+
+        private void BackgroundBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (BackgroundBox.Text)
+            {
+                case "White":
+                    BackgroundColor = Color.FromArgb(255, 255, 255);
+                    break;
+                case "Grey":
+                    BackgroundColor = Color.FromArgb(192, 192, 192);
+                    break;
+                case "Light blue":
+                    BackgroundColor = Color.FromArgb(153, 255, 255);
+                    break;
+            }
+        }
+
+        private void SpeedBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (SpeedBox.Text)
+            {
+                case "Slow":
+                    Speed = 80;
+                    break;
+                case "Medium":
+                    Speed = 60;
+                    break;
+                case "Fast":
+                    Speed = 50;
+                    break;
+            }
+        }
+        private void WriteLeaderboard()
+        {
+            StreamWriter writer = new StreamWriter("../../Leaderboard.txt", true);
+            writer.WriteLine("Player: {0,-20} : Score: {1}", PlayerName, score);
+            writer.Close();
+        }
+
+        private void FillLeaderboard()
+        {
+            List<Result> result = new List<Result>();
+            Leaderboard.Rows.Clear();
+            using (StreamReader reader = new StreamReader("../../Leaderboard.txt"))
+            {
+                int nr = Leaderboard.Rows.Count;
+                if (new FileInfo("../../Leaderboard.txt").Length != 0)
+                {
+                    string line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        string[] parts = line.Split(':');
+                        result.Add(new Result(parts[1], int.Parse(parts[3])));
+                        line = reader.ReadLine();
+                    }
+                }
+            }
+            result.Sort();
+            result.Reverse();
+            if (result.Count > 10)
+            {
+                while (result.Count > 10)
+                {
+                    result.RemoveAt(10);
+                }
+            }
+            for (int i = 0; i < result.Count; i++)
+            {
+                Leaderboard.Rows.Add(i + 1, result[i].Name, result[i].score);
+            }
+            
+            
         }
     }
-}
+ }
 

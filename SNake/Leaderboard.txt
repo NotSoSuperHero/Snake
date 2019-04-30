@@ -1,0 +1,13 @@
+Player:                      : Score: 5
+Player: Deividas             : Score: 17
+Player: Deividas             : Score: 6
+Player:                      : Score: 6
+Player: Deividas             : Score: 116
+Player: Deividas1            : Score: 2
+Player:                      : Score: 125
+Player: Name                 : Score: 7
+Player: Deividas1            : Score: 109
+Player:                      : Score: 144
+Player: TopScorer            : Score: 247
+Player: New                  : Score: 6
+Player: Seven                : Score: 10
