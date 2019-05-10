@@ -11,3 +11,10 @@ Player:                      : Score: 144
 Player: TopScorer            : Score: 247
 Player: New                  : Score: 6
 Player: Seven                : Score: 10
+Player:                      : Score: 17
+Player:                      : Score: 1
+Player:                      : Score: 6
+Player:                      : Score: 3
+Player:                      : Score: 145
+Player:                      : Score: 0
+Player:                      : Score: 12

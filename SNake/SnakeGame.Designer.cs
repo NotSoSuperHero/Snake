@@ -44,6 +44,7 @@
             this.NumberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Player_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ScoreColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CloseButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Leaderboard)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,10 +55,10 @@
             this.MenuLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MenuLabel.Location = new System.Drawing.Point(0, 0);
             this.MenuLabel.Name = "MenuLabel";
-            this.MenuLabel.Size = new System.Drawing.Size(398, 400);
+            this.MenuLabel.Size = new System.Drawing.Size(398, 392);
             this.MenuLabel.TabIndex = 0;
             this.MenuLabel.Text = "Snake\r\n\r\nUse the arrow keys to change directions. Use the space bar to pause. \r\n\r" +
-    "\nPress ENTER to begin.";
+    "\nPress Start to begin.";
             this.MenuLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // HeadBox
@@ -71,7 +72,7 @@
             "Red"});
             this.HeadBox.Location = new System.Drawing.Point(35, 177);
             this.HeadBox.Name = "HeadBox";
-            this.HeadBox.Size = new System.Drawing.Size(121, 21);
+            this.HeadBox.Size = new System.Drawing.Size(121, 24);
             this.HeadBox.TabIndex = 4;
             this.HeadBox.SelectedIndexChanged += new System.EventHandler(this.HeadBox_SelectedIndexChanged);
             // 
@@ -81,13 +82,13 @@
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label1.Location = new System.Drawing.Point(32, 159);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(108, 15);
+            this.Label1.Size = new System.Drawing.Size(131, 18);
             this.Label1.TabIndex = 2;
             this.Label1.Text = "Snake head Color:";
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(162, 365);
+            this.Start.Location = new System.Drawing.Point(35, 363);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(75, 23);
             this.Start.TabIndex = 3;
@@ -99,7 +100,7 @@
             // 
             this.Namebox.Location = new System.Drawing.Point(292, 322);
             this.Namebox.Name = "Namebox";
-            this.Namebox.Size = new System.Drawing.Size(100, 20);
+            this.Namebox.Size = new System.Drawing.Size(100, 22);
             this.Namebox.TabIndex = 5;
             // 
             // Label2
@@ -108,7 +109,7 @@
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label2.Location = new System.Drawing.Point(289, 304);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(81, 15);
+            this.Label2.Size = new System.Drawing.Size(97, 18);
             this.Label2.TabIndex = 6;
             this.Label2.Text = "Player Name:";
             // 
@@ -127,7 +128,7 @@
             "Gold"});
             this.SpecFoodBox.Location = new System.Drawing.Point(35, 222);
             this.SpecFoodBox.Name = "SpecFoodBox";
-            this.SpecFoodBox.Size = new System.Drawing.Size(121, 21);
+            this.SpecFoodBox.Size = new System.Drawing.Size(121, 24);
             this.SpecFoodBox.TabIndex = 7;
             this.SpecFoodBox.SelectedIndexChanged += new System.EventHandler(this.SpecFoodBox_SelectedIndexChanged);
             // 
@@ -137,7 +138,7 @@
             this.Label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label3.Location = new System.Drawing.Point(32, 204);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(110, 15);
+            this.Label3.Size = new System.Drawing.Size(135, 18);
             this.Label3.TabIndex = 8;
             this.Label3.Text = "Special food Color:";
             // 
@@ -147,7 +148,7 @@
             this.Label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label4.Location = new System.Drawing.Point(226, 159);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(108, 15);
+            this.Label4.Size = new System.Drawing.Size(133, 18);
             this.Label4.TabIndex = 9;
             this.Label4.Text = "Background Color:";
             // 
@@ -157,7 +158,7 @@
             this.Label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label5.Location = new System.Drawing.Point(226, 204);
             this.Label5.Name = "Label5";
-            this.Label5.Size = new System.Drawing.Size(82, 15);
+            this.Label5.Size = new System.Drawing.Size(98, 18);
             this.Label5.TabIndex = 10;
             this.Label5.Text = "Snake speed:";
             // 
@@ -176,7 +177,7 @@
             "Fast"});
             this.SpeedBox.Location = new System.Drawing.Point(229, 221);
             this.SpeedBox.Name = "SpeedBox";
-            this.SpeedBox.Size = new System.Drawing.Size(121, 21);
+            this.SpeedBox.Size = new System.Drawing.Size(121, 24);
             this.SpeedBox.TabIndex = 11;
             this.SpeedBox.SelectedIndexChanged += new System.EventHandler(this.SpeedBox_SelectedIndexChanged);
             // 
@@ -195,7 +196,7 @@
             "Light blue"});
             this.BackgroundBox.Location = new System.Drawing.Point(229, 177);
             this.BackgroundBox.Name = "BackgroundBox";
-            this.BackgroundBox.Size = new System.Drawing.Size(121, 21);
+            this.BackgroundBox.Size = new System.Drawing.Size(121, 24);
             this.BackgroundBox.TabIndex = 12;
             this.BackgroundBox.SelectedIndexChanged += new System.EventHandler(this.BackgroundBox_SelectedIndexChanged);
             // 
@@ -234,11 +235,22 @@
             this.ScoreColumn.Name = "ScoreColumn";
             this.ScoreColumn.ReadOnly = true;
             // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(229, 363);
+            this.CloseButton.Name = "CloseButton";
+            this.CloseButton.Size = new System.Drawing.Size(75, 23);
+            this.CloseButton.TabIndex = 14;
+            this.CloseButton.Text = "Close";
+            this.CloseButton.UseVisualStyleBackColor = true;
+            this.CloseButton.Click += new System.EventHandler(this.Close_Click);
+            // 
             // SnakeGame
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(404, 400);
+            this.ClientSize = new System.Drawing.Size(402, 392);
+            this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.Leaderboard);
             this.Controls.Add(this.BackgroundBox);
             this.Controls.Add(this.SpeedBox);
@@ -286,6 +298,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NumberColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Player_Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn ScoreColumn;
+        private System.Windows.Forms.Button CloseButton;
     }
 }
 

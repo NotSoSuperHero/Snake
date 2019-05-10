@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SNake
 {
@@ -17,13 +18,13 @@ namespace SNake
         private Food Special;
         private int Cooldown = 5;
         private bool SpecialExists = false;
-        int Speed = 60;
+        int Speed = 65;
         private int LoopDirection; //Kintamasis saugo gyvatės kryptį intervalo pradžioje.
         private Brush SnakeHeadColor = Brushes.Black;
         private Brush SpecFoodColor = Brushes.Coral;
         private Color BackgroundColor;
         private string PlayerName = "";
-
+        private int Length = 3;
 
         public SnakeGame()
         {
@@ -34,18 +35,26 @@ namespace SNake
             snake.Grow();
             food = new Food(rand);
             gameLoop.Interval = Speed;
-            gameLoop.Tick += Update;
+            gameLoop.Tick += Update;            
             FillLeaderboard();
         }
-
+        private async void SpeedUp()
+        {
+            int temp = Speed;
+            Speed = Speed / 2;
+            await Task.Delay(7000);
+            Speed = temp;
+        }
         private void SnakeGame_KeyDown(object sender, KeyEventArgs e)
         {
 
             switch (e.KeyData)
             {
                 case Keys.Space:
-                    if (!MenuLabel.Visible)
+                    if (!Start.Visible)
                         gameLoop.Enabled = (gameLoop.Enabled) ? false : true;
+                    CloseButton.Enabled = (CloseButton.Enabled) ? false : true;
+                    CloseButton.Visible = (CloseButton.Visible) ? false : true;
                     break;
 
 
@@ -78,7 +87,8 @@ namespace SNake
 
         private void Update(object sender, EventArgs e)
         {
-            this.Text = string.Format("Snake - Score: {0}", score);
+            gameLoop.Interval = Speed;
+            this.Text = string.Format("Snake - Score: {0}, Current snake length: {1}", score, Length);
             LoopDirection = direction; //Intervalo pradžioje nurodome to ciklo kryptį
             snake.Move(direction);
             for (int i = 1; i < snake.Body.Length; i++)
@@ -94,6 +104,7 @@ namespace SNake
                 snake.Body[0].Y = 1;
             if (snake.Body[0].IntersectsWith(food.Piece))
             {
+                Length++;
                 score += Food.GetScore();
                 snake.Grow();
                 food.Generate(rand);
@@ -115,7 +126,7 @@ namespace SNake
                     Special = null;
                     SpecialExists = false;
                     Cooldown = 10;
-                    score += 100;
+                    SpeedUp();
                 }
             this.Invalidate();
         }
@@ -133,7 +144,7 @@ namespace SNake
             food = new Food(rand);
             WriteLeaderboard();
             FillLeaderboard();
-            direction = 0; score = 0;
+            direction = 0; score = 0; Length = 3;
             this.BackColor = SystemColors.Control;
             Namebox.Text = PlayerName;
            
@@ -156,7 +167,7 @@ namespace SNake
                 PlayerName = "";
             }
             Mode(false);
-            gameLoop.Interval = Speed;
+            
             if (BackgroundColor == null)
                 this.BackColor = SystemColors.Control;
             else this.BackColor = BackgroundColor;
@@ -200,6 +211,8 @@ namespace SNake
             SpeedBox.Visible = mode;
             Leaderboard.Enabled = mode;
             Leaderboard.Visible = mode;
+            CloseButton.Enabled = mode;
+            CloseButton.Visible = mode;
         }
 
         private void SpecFoodBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -242,7 +255,7 @@ namespace SNake
                     Speed = 80;
                     break;
                 case "Medium":
-                    Speed = 60;
+                    Speed = 65;
                     break;
                 case "Fast":
                     Speed = 50;
@@ -289,6 +302,12 @@ namespace SNake
             }
             
             
+        }
+
+        private void Close_Click(object sender, EventArgs e)
+        {
+            WriteLeaderboard();
+            this.Close();
         }
     }
  }
