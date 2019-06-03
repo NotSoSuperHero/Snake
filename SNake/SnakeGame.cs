@@ -264,7 +264,7 @@ namespace SNake
         }
         private void WriteLeaderboard()
         {
-            StreamWriter writer = new StreamWriter("../../Leaderboard.txt", true);
+            StreamWriter writer = new StreamWriter("./Leaderboard.txt", true);
             writer.WriteLine("Player: {0,-20} : Score: {1}", PlayerName, score);
             writer.Close();
         }
@@ -273,7 +273,7 @@ namespace SNake
         {
             List<Result> result = new List<Result>();
             Leaderboard.Rows.Clear();
-            using (StreamReader reader = new StreamReader("../../Leaderboard.txt"))
+            using (StreamReader reader = new StreamReader("./Leaderboard.txt"))
             {
                 int nr = Leaderboard.Rows.Count;
                 if (new FileInfo("../../Leaderboard.txt").Length != 0)
